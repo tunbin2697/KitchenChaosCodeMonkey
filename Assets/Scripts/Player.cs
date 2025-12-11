@@ -12,6 +12,12 @@ public class Player : MonoBehaviour
     [SerializeField] private GameInput gameInput;
     [SerializeField] private LayerMask countersLayerMask;
 
+    // Player collision parameters
+    [SerializeField] private float playerRadius = 0.7f;
+    [SerializeField] private float playerHeight = 2f;
+    [SerializeField] private float rotateSpeed = 10f;
+    [SerializeField] private float interactDistance = 2f;
+
     private bool isWalking;
     private Vector3 lastInteractDir;
 
@@ -31,8 +37,6 @@ public class Player : MonoBehaviour
         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
         float moveDistance = moveSpeed * Time.deltaTime;
-        float playerRadius = 0.7f;
-        float playerHeight = 2f;
         bool canMove = !Physics.CapsuleCast(
             transform.position,
             transform.position + Vector3.up * playerHeight,
@@ -91,7 +95,6 @@ public class Player : MonoBehaviour
 
         isWalking = moveDir != Vector3.zero;
 
-        float rotateSpeed = 10f;
         transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotateSpeed);
     }
 
@@ -109,7 +112,6 @@ public class Player : MonoBehaviour
             lastInteractDir = moveDir;
         }
 
-        float interactDistance = 2f;
         if (Physics.Raycast(transform.position, lastInteractDir, out RaycastHit raycastHit, interactDistance, countersLayerMask))
         {
             // Hit something that is a counter

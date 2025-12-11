@@ -16,6 +16,11 @@ public class GameInput : MonoBehaviour
         playerInputActions.Player.Enable();
     }
 
+    private void OnDestroy()
+    {
+        playerInputActions.Dispose();
+    }
+
     /// <summary>
     /// Gets the normalized movement vector from player input
     /// </summary>
